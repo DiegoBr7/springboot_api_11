@@ -35,4 +35,30 @@ public class UsuarioService {
 		return userId.orElseThrow(() -> new RecursoNotFound("Não encontrado"));
 	}
 
+	public Usuario alterarPorId(Usuario u , Long id) {
+		Optional<Usuario> userId = usRepo.findById(id);
+		if (userId.isPresent()) {
+			u.setId(id);
+			return usRepo.save(u);
+		} else {
+			throw new RecursoNotFound("Identificador nao encontrado");
+		}
+	}
+
+	public Usuario deletarPorId(Long id) {
+
+		try {
+			Usuario a = usuarioPorId(id);
+			if(a != null){
+				usRepo.deleteById(id);
+				a = usuarioPorId(id);
+				if(a == null)
+					return  a ;
+				throw new RuntimeException("Nao foi possivel excluir");
+			}
+		}catch (Exception e){
+			throw  new RuntimeException("Error: " + e.getMessage());
+		}
+		return  null;
+	}
 }

@@ -66,20 +66,14 @@ public class AlunoService {
 			Aluno a = buscarPorId(id);
 			if (a != null) {
 				repoAluno.deleteById(id);
-				
 				a = buscarPorId(id);
 				if (a == null)
 					return a;
-
-				throw new RuntimeException("Não foi possível Excluir "); 
-					
+				throw new RuntimeException("Não foi possível Excluir ");
 			}
-			
 		} catch (Exception e) {
 			throw new RuntimeException("Error: " + e.getMessage());
 		}
-		
 		return null;
 	}
-
 }
